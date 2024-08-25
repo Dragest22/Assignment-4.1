@@ -1,0 +1,77 @@
+<!-- Logan Hiott, August 25th 2024 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSC102 Home Page</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <h1>Welcome To My CSC102 Home Page</h1>
+    
+    <!-- Start and Stop buttons -->
+    <button id="startBtn" onclick="startMoving()">Start</button>
+    <button id="stopBtn" onclick="stopMoving()" disabled>Stop</button>
+
+    <p>
+        <!-- Meme image with ID for manipulation -->
+        <img id="memeimage" src="huh.png">
+    </p>
+
+    <script>
+        // Variable to store the interval ID
+        let moveInterval;
+
+        // Function to start moving the meme image
+        function startMoving() {
+            // Disable the Start button and enable the Stop button
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+
+            // Get the image element
+            const memeImage = document.getElementById('memeimage');
+
+            // Set initial position
+            let posX = 0;
+            let posY = 0;
+            let directionX = 1; // 1 for right, -1 for left
+            let directionY = 1; // 1 for down, -1 for up
+
+            // Function to move the image
+            function moveMeme() {
+                // Update position
+                posX += directionX * 5; // Move by 5 pixels
+                posY += directionY * 5; // Move by 5 pixels
+
+                // Reverse direction if the image hits the edge of the window
+                if (posX + memeImage.width >= window.innerWidth || posX <= 0) {
+                    directionX *= -1;
+                }
+                if (posY + memeImage.height >= window.innerHeight || posY <= 0) {
+                    directionY *= -1;
+                }
+
+                // Apply the new position
+                memeImage.style.left = posX + 'px';
+                memeImage.style.top = posY + 'px';
+                memeImage.style.position = 'absolute'; // Ensure the image is positioned absolutely
+            }
+
+            // Start the movement
+            moveInterval = setInterval(moveMeme, 50); // Move every 50ms
+        }
+
+        // Function to stop moving the meme image
+        function stopMoving() {
+            // Disable the Stop button and enable the Start button
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+
+            // Clear the interval to stop movement
+            clearInterval(moveInterval);
+        }
+    </script>
+</body>
+
+</html>
